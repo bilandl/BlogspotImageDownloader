@@ -26,6 +26,8 @@ elif(args.destination[-1] != '/'):
 
 url = args.url
 downloads = 0
+print("Mod by bilandl - no verbose-mode can be aktivated")
+print("Mod V2")
 while(True):
 	request = urllib.request.Request(url)
 	requestData = urllib.request.urlopen(request, None)
@@ -50,7 +52,7 @@ while(True):
 			try:
 				imageresponse = urllib.request.urlopen(source, None)
 			except:
-				print("Encountered a 404 image")
+				print("Encountered a 404 image - ", source)
 				continue
 
 			guess = ['']
@@ -68,10 +70,12 @@ while(True):
 
 				file = None
 				if(os.path.isfile(fullfilepath)):
-					print("Downloaded an image but had to rename it (it probably already existed)")
-					fullfilepath = os.path.abspath(args.destination + ''.join(random.choice(alphanum) for i in range (10)) + guess[0])
+					downloads += 1
+					print("no DL, File exists - URL-No: ", downloads)
+					break
 				file = open(fullfilepath, 'wb')
 				shutil.copyfileobj(imageresponse, file)
+				print("Download!", title, "URL-No: ", downloads)
 				downloads += 1
 			except Exception as e:
 				print("Failed to write to file")
